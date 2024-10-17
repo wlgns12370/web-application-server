@@ -1,17 +1,19 @@
 package webserver;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
-import java.nio.file.Files;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import webserver.entity.RequestEntity;
+import webserver.entity.ResponseEntity;
+
 public class RequestHandler extends Thread {
     private static final Logger log = LoggerFactory.getLogger(RequestHandler.class);
+    private final ControllerDispatcher dispatcher = new ControllerDispatcher();
     private Socket connection;
 
     public RequestHandler(Socket connectionSocket) {
@@ -25,7 +27,7 @@ public class RequestHandler extends Thread {
         try (InputStream in = connection.getInputStream(); OutputStream out = connection.getOutputStream()) {
             RequestEntity request = RequestEntity.from(in);
             
-            byte[] body = Files.readAllBytes(new File("./webapp" + request.getHttpMessage()).toPath());
+            byte[] body = dispatcher.dispatch(request);
             
             ResponseEntity.from(out)
                 .response200Header(body.length)

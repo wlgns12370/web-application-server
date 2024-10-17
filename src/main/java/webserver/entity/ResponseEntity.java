@@ -1,4 +1,4 @@
-package webserver;
+package webserver.entity;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -6,6 +6,8 @@ import java.io.OutputStream;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import webserver.RequestHandler;
 
 public class ResponseEntity {
     private static final Logger log = LoggerFactory.getLogger(RequestHandler.class);
