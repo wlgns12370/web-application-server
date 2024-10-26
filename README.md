@@ -21,7 +21,7 @@
 * 기존의 알고 있는 디스패처 서블릿 지식과 `mvc` 패턴을 적용해 보려고 노력하였다. 하지만 `url`과 `controller`를 `Map` 형태로 가질때, 직접 `url`이 어떤 `controller`에 연결되어야 하는지 직접 세팅하는 부분이 아쉬웠다. 또한 테스트 코드를 사용하기 위해서 `getter`를 열어주었는데, 이러한 이유로 `getter`를 열어도 괜찮은지 의문이 들었다. 단순 html 파일을 랜더링해주는 역할을 하는 `controller`의 이름도 `RenderingController`와 `ViewController` 중 고민했지만 `RenderingController`가 더 적합하다고 생각하였다. 아직까지 아쉬운 부분이 많지만, 나중에 내가 생각했던 부분과 실제 프레임워크 구현체와의 차이점이 궁금했다.
 
 ### 요구사항 3 - post 방식으로 회원가입
-* 
+* `UserController`에서 `HTTP` 메서드 분기를 하였는데, `Controller`는 비즈니스 영역과 상호작용하는데 `HTTP` 메서드에 대한 부분까지 책임지면, `SRP`를 위반한다고 판단하였고, `RequestEntity`로 책임을 위임하였다. 하지만 아직까지 `RequestEntity`에 책임이 너무 많아서 어떻게 분리해야 할지는 여전히 의문이다.
 
 ### 요구사항 4 - redirect 방식으로 이동
 * 
