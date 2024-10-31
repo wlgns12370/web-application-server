@@ -6,6 +6,8 @@ import java.util.Map;
 import webserver.controller.Controller;
 import webserver.controller.RenderingController;
 import webserver.controller.UserController;
+import webserver.entity.ApiResult;
+import webserver.entity.HttpStatus;
 import webserver.entity.RequestEntity;
 
 public class ControllerDispatcher {
@@ -18,11 +20,11 @@ public class ControllerDispatcher {
         controllerMap.put("/user/create", new UserController());
     }
 
-    public byte[] dispatch(RequestEntity request) {
+    public ApiResult dispatch(RequestEntity request) {
         Controller controller = controllerMap.get(request.getUri());
         if (controller != null) {
             return controller.handleRequest(request);
         }
-        return "404 Not Found".getBytes();
+        return ApiResult.from(HttpStatus.NOT_FOUND, "올바르지 않은 URL입니다.".getBytes());
     }
 }

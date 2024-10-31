@@ -8,6 +8,7 @@ import java.net.Socket;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import webserver.entity.ApiResult;
 import webserver.entity.RequestEntity;
 import webserver.entity.ResponseEntity;
 
@@ -27,11 +28,9 @@ public class RequestHandler extends Thread {
         try (InputStream in = connection.getInputStream(); OutputStream out = connection.getOutputStream()) {
             RequestEntity request = RequestEntity.from(in);
             
-            byte[] body = dispatcher.dispatch(request);
-            
-            ResponseEntity.from(out)
-                .response200Header(body.length)
-                .responseBody(body);
+            ApiResult response = dispatcher.dispatch(request);
+
+            ResponseEntity.from(out, response);
         } catch (IOException e) {
             log.error(e.getMessage());
         }

@@ -1,7 +1,8 @@
 package webserver.controller;
 
+import webserver.entity.ApiResult;
 import webserver.entity.RequestEntity;
 
 public interface Controller {
-    byte[] handleRequest(RequestEntity request);
+    ApiResult handleRequest(RequestEntity request);
 }
