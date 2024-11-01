@@ -9,8 +9,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import webserver.entity.ApiResult;
-import webserver.entity.RequestEntity;
-import webserver.entity.ResponseEntity;
+import webserver.entity.request.RequestEntity;
+import webserver.entity.response.ResponseEntity;
 
 public class RequestHandler extends Thread {
     private static final Logger log = LoggerFactory.getLogger(RequestHandler.class);

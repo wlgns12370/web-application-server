@@ -1,4 +1,4 @@
-package webserver.entity;
+package webserver.entity.request;
 
 import static util.HttpRequestUtils.parseQueryString;
 
@@ -21,12 +21,12 @@ public class RequestEntity {
     private final Map<String, String> queryString;
     private final Map<String, String> headers;
 
-    private RequestEntity(
+    public RequestEntity(
         final HttpMethod httpMethod,
         final String uri,
         final Map<String, String> queryString,
         final Map<String, String> headers
-    ) throws IOException {
+    ) {
         this.httpMethod = httpMethod;
         this.uri = uri;
         this.queryString = queryString;
