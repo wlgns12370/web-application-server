@@ -8,6 +8,9 @@ import java.io.InputStream;
 
 import org.junit.Test;
 
+import webserver.entity.request.HttpMethod;
+import webserver.entity.request.RequestEntity;
+
 public class RequestEntityTest {
     
     @Test

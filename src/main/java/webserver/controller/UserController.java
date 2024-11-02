@@ -1,9 +1,10 @@
 package webserver.controller;
 
+import db.DataBase;
 import model.User;
 import webserver.entity.ApiResult;
-import webserver.entity.HttpStatus;
-import webserver.entity.RequestEntity;
+import webserver.entity.request.RequestEntity;
+import webserver.entity.response.HttpStatus;
 
 public class UserController implements Controller {
 
@@ -15,7 +16,8 @@ public class UserController implements Controller {
             request.getQueryString().get("name"),
             request.getQueryString().get("email")
         );
+        DataBase.addUser(user);
         System.out.println(user.toString());
-        return ApiResult.from(HttpStatus.FOUND, null);
+        return ApiResult.from(HttpStatus.FOUND, null, null);
     }
 }

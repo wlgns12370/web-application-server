@@ -1,4 +1,4 @@
-package webserver.entity;
+package webserver.entity.response;
 
 public enum HttpStatus {
     OK(200, "OK"),
