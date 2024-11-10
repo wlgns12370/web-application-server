@@ -31,7 +31,8 @@ public class LoginControllerTest {
             HttpMethod.POST,
             "/user/create",
             queryString(),
-            headers()
+            headers(),
+            null
         );
 
         final ApiResult result = loginController.handleRequest(actual);
@@ -48,7 +49,8 @@ public class LoginControllerTest {
             HttpMethod.POST,
             "/user/create",
             invalidQueryString(),
-            headers()
+            headers(),
+            null
         );
 
         final ApiResult result = loginController.handleRequest(actual);
