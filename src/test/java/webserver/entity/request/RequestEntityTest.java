@@ -1,4 +1,4 @@
-package webserver.entity;
+package webserver.entity.request;
 
 import static org.junit.Assert.assertEquals;
 
@@ -7,9 +7,6 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import org.junit.Test;
-
-import webserver.entity.request.HttpMethod;
-import webserver.entity.request.RequestEntity;
 
 public class RequestEntityTest {
     

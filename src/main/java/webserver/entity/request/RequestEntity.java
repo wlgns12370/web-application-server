@@ -1,5 +1,6 @@
 package webserver.entity.request;
 
+import static util.HttpRequestUtils.parseCookies;
 import static util.HttpRequestUtils.parseQueryString;
 
 import java.io.BufferedReader;
@@ -20,23 +21,27 @@ public class RequestEntity {
     private final String uri;
     private final Map<String, String> queryString;
     private final Map<String, String> headers;
+    private final Boolean isLogined;
 
     public RequestEntity(
         final HttpMethod httpMethod,
         final String uri,
         final Map<String, String> queryString,
-        final Map<String, String> headers
+        final Map<String, String> headers,
+        final Boolean isLogined
     ) {
         this.httpMethod = httpMethod;
         this.uri = uri;
         this.queryString = queryString;
         this.headers = headers;
+        this.isLogined = isLogined;
     }
 
     public static RequestEntity from(InputStream in) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(in));
         String[] line = br.readLine().split(" ");
         int index = line[1].indexOf("?");
+        System.out.println(line[0] + " " + line[1]);
 
         List<String> headers = new ArrayList<>();
         String inputLine;
@@ -51,20 +56,26 @@ public class RequestEntity {
 
         Map<String, String> headerMap = parseHeader(headers);
         Map<String, String> queryString = null;
+        Boolean isLogined = checkLogin(headerMap);
 
         if (HttpMethod.GET.toString().equals(line[0])) {
             if (hasQueryString(index)) {
                 String requestPath = line[1].substring(0, index);
                 String param = line[1].substring(index+1);
                 queryString = parseQueryString(param);
-                return new RequestEntity(HttpMethod.valueOf(line[0]), requestPath, queryString, headerMap);
+                return new RequestEntity(HttpMethod.valueOf(line[0]), requestPath, queryString, headerMap, isLogined);
             }
         }
+
         if (HttpMethod.POST.toString().equals(line[0])) {
             String body = parseBody(br, Integer.parseInt(headerMap.get("content-length")));
             queryString = parseQueryString(body);
         }
-        return new RequestEntity(HttpMethod.valueOf(line[0]), line[1], queryString, headerMap);
+        return new RequestEntity(HttpMethod.valueOf(line[0]), line[1], queryString, headerMap, isLogined);
+    }
+
+    private static Boolean checkLogin(Map<String, String> headerMap) {
+        return Boolean.parseBoolean(parseCookies(headerMap.get("cookie")).get("logined"));
     }
 
     private static boolean hasQueryString(int index) {
@@ -97,5 +108,9 @@ public class RequestEntity {
 
     public Map<String, String> getQueryString() {
         return queryString;
+    }
+
+    public Boolean isLogined() {
+        return isLogined;
     }
 }

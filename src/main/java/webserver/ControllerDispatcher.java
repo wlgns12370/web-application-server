@@ -7,6 +7,7 @@ import webserver.controller.Controller;
 import webserver.controller.LoginController;
 import webserver.controller.RenderingController;
 import webserver.controller.UserController;
+import webserver.controller.UserListController;
 import webserver.entity.ApiResult;
 import webserver.entity.request.RequestEntity;
 import webserver.entity.response.HttpStatus;
@@ -22,6 +23,7 @@ public class ControllerDispatcher {
         controllerMap.put("/user/login.html", new RenderingController());
         controllerMap.put("/user/login", new LoginController());
         controllerMap.put("/user/login_failed.html", new RenderingController());
+        controllerMap.put("/user/list", new UserListController());
     }
 
     public ApiResult dispatch(RequestEntity request) {
